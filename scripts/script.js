@@ -12,8 +12,14 @@ function getComputerChoice() {
 
 let playerPoints = 0;
 let computerPoints = 0;
+let rounds = 0;
 
-function playRound(playerChoice, computerChoice) {  
+const PUNTAJE_HUMANO = document.querySelector(".jugadores__h span");
+const PUNTAJE_COMPUTADORA = document.querySelector(".jugadores__c span");
+const BUTTONS = document.querySelectorAll(".botonera__boton");
+const CONFIRMACION = document.querySelector(".confirmacion h2");
+
+function playRound(playerChoice, computerChoice) {
   if (computerChoice === "Rock" && playerChoice.toLowerCase() === "scissors") {
     computerPoints ++;
     return `You lose! ${computerChoice.toLowerCase()} beats ${playerChoice.toLowerCase()}`;
@@ -42,23 +48,10 @@ function playRound(playerChoice, computerChoice) {
   }
 }
 
-function game(){
-  for (let i = 0; i < 5; i++) {
-    let playerChoice = prompt("Rock, Paper or Scissors?");
-    if (playerChoice.toLowerCase() !== "rock" && playerChoice.toLowerCase() !== "paper" && playerChoice.toLowerCase() !== "scissors") {
-      alert("Valor ingresado invalido");
-      i -= 1;      
-    }else{
-      console.log(playRound(playerChoice, getComputerChoice()));
-      console.log(`Your points: ${playerPoints}     |     computer points: ${computerPoints}`);
-    }
-  }
-  if (playerPoints > computerPoints) {
-    return "\nYOU WIN THE GAME!";
-  } else if (computerPoints > playerPoints) {
-    return "\nYOU LOSE THE GAME!";
-  } else {
-    return "TIE??!!"
-  }
-}
-console.log(game());
+BUTTONS.forEach(button => {
+  button.addEventListener("click", () => {
+    CONFIRMACION.innerText = playRound(button.innerText.toLowerCase(), getComputerChoice());
+    PUNTAJE_HUMANO.innerText = playerPoints;
+    PUNTAJE_COMPUTADORA.innerText = computerPoints;
+  });
+})
