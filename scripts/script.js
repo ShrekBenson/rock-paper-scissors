@@ -43,22 +43,30 @@ function playRound(playerChoice, computerChoice) {
 }
 
 function game(){
-  for (let i = 0; i < 5; i++) {
+  let round = 1;
+  while (round <= 5) {
     let playerChoice = prompt("Rock, Paper or Scissors?");
-    if (playerChoice.toLowerCase() !== "rock" && playerChoice.toLowerCase() !== "paper" && playerChoice.toLowerCase() !== "scissors") {
-      alert("Valor ingresado invalido");
-      i -= 1;      
-    }else{
+
+    if (playerChoice === null) {
+      alert("Recarga la pagina para volver al juego");
+      round = 6;
+    } else if (playerChoice.toLowerCase() !== "rock" && playerChoice.toLowerCase() !== "paper" && playerChoice.toLowerCase() !== "scissors") {
+      alert("Valor ingresado invalido");     
+    } else{
       console.log(playRound(playerChoice, getComputerChoice()));
       console.log(`Your points: ${playerPoints}     |     computer points: ${computerPoints}`);
+      round ++;
     }
   }
+  
   if (playerPoints > computerPoints) {
     return "\nYOU WIN THE GAME!";
   } else if (computerPoints > playerPoints) {
     return "\nYOU LOSE THE GAME!";
-  } else {
-    return "TIE??!!"
+  } else if (computerPoints === playerPoints){
+    return "TIE??!!";
+  } else{
+    return;
   }
 }
 console.log(game());
