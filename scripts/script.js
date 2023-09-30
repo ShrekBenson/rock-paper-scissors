@@ -61,6 +61,7 @@ function playRound(playerChoice, computerChoice) {
 BUTTONS.forEach(button => {
   button.addEventListener("click", () => {
     let computerChoice = getComputerChoice();
+    
     CONFIRMACION.innerText = playRound(button.innerText.toLowerCase(), computerChoice);
     PUNTAJE_HUMANO.innerText = `${button.innerText} - ${playerPoints}`;
     PUNTAJE_COMPUTADORA.innerText = `${computerChoice} - ${computerPoints}`;
