@@ -57,8 +57,11 @@ BUTTONS.forEach(button => {
       } else if (playerPoints > computerPoints) {
         CONFIRMACION.innerText = `YOU WIN THE GAME!!`;
       } else {
-        CONFIRMACION.innerText = `IS TIE!!`
+        CONFIRMACION.innerText = `IS TIE!!`;
       }
+      setTimeout(() => {
+        CONFIRMACION.innerText = `F5 TO PLAY AGAIN`;
+      }, 2000);
       return
     }
 
