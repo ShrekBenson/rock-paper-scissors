@@ -12,6 +12,12 @@ function getComputerChoice() {
 
 let playerPoints = 0;
 let computerPoints = 0;
+let rounds = 0;
+
+const PUNTAJE_HUMANO = document.querySelector(".jugadores__h span");
+const PUNTAJE_COMPUTADORA = document.querySelector(".jugadores__c span");
+const BUTTONS = document.querySelectorAll(".botonera__boton");
+const CONFIRMACION = document.querySelector(".confirmacion h2");
 
 function playRound(playerChoice, computerChoice) {  
   if (computerChoice === "Rock" && playerChoice.toLowerCase() === "scissors") {
@@ -42,31 +48,26 @@ function playRound(playerChoice, computerChoice) {
   }
 }
 
-function game(){
-  let round = 1;
-  while (round <= 5) {
-    let playerChoice = prompt("Rock, Paper or Scissors?");
-
-    if (playerChoice === null) {
-      alert("Recarga la pagina para volver al juego");
-      round = 6;
-    } else if (playerChoice.toLowerCase() !== "rock" && playerChoice.toLowerCase() !== "paper" && playerChoice.toLowerCase() !== "scissors") {
-      alert("Valor ingresado invalido");     
-    } else{
-      console.log(playRound(playerChoice, getComputerChoice()));
-      console.log(`Your points: ${playerPoints}     |     computer points: ${computerPoints}`);
-      round ++;
+BUTTONS.forEach(button => {
+  button.addEventListener("click", () => {
+    rounds ++;
+    if (rounds > 4) {
+      if (computerPoints > playerPoints) {
+        CONFIRMACION.innerText = `YOU LOSE THE GAME!!`;
+      } else if (playerPoints > computerPoints) {
+        CONFIRMACION.innerText = `YOU WIN THE GAME!!`;
+      } else {
+        CONFIRMACION.innerText = `IS TIE!!`;
+      }
+      setTimeout(() => {
+        CONFIRMACION.innerText = `F5 TO PLAY AGAIN`;
+      }, 2000);
+      return
     }
-  }
-  
-  if (playerPoints > computerPoints) {
-    return "\nYOU WIN THE GAME!";
-  } else if (computerPoints > playerPoints) {
-    return "\nYOU LOSE THE GAME!";
-  } else if (computerPoints === playerPoints){
-    return "TIE??!!";
-  } else{
-    return;
-  }
-}
-console.log(game());
+
+    let computerChoice = getComputerChoice();    
+    CONFIRMACION.innerText = playRound(button.innerText.toLowerCase(), computerChoice);
+    PUNTAJE_HUMANO.innerText = `${button.innerText} - ${playerPoints}`;
+    PUNTAJE_COMPUTADORA.innerText = `${computerChoice} - ${computerPoints}`;    
+  });
+})
