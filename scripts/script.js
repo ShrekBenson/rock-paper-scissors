@@ -20,6 +20,16 @@ const BUTTONS = document.querySelectorAll(".botonera__boton");
 const CONFIRMACION = document.querySelector(".confirmacion h2");
 
 function playRound(playerChoice, computerChoice) {
+  rounds ++;
+  if (rounds > 5) {
+    if (computerPoints > playerPoints) {
+      return `YOU LOSE THE GAME!!`;
+    } else if (playerPoints > computerPoints) {
+      return `YOU WIN THE GAME!!`;
+    } else {
+      return `IS TIE!!`
+    }
+  }
   if (computerChoice === "Rock" && playerChoice.toLowerCase() === "scissors") {
     computerPoints ++;
     return `You lose! ${computerChoice.toLowerCase()} beats ${playerChoice.toLowerCase()}`;
@@ -50,8 +60,9 @@ function playRound(playerChoice, computerChoice) {
 
 BUTTONS.forEach(button => {
   button.addEventListener("click", () => {
-    CONFIRMACION.innerText = playRound(button.innerText.toLowerCase(), getComputerChoice());
-    PUNTAJE_HUMANO.innerText = playerPoints;
-    PUNTAJE_COMPUTADORA.innerText = computerPoints;
+    let computerChoice = getComputerChoice();
+    CONFIRMACION.innerText = playRound(button.innerText.toLowerCase(), computerChoice);
+    PUNTAJE_HUMANO.innerText = `${button.innerText} - ${playerPoints}`;
+    PUNTAJE_COMPUTADORA.innerText = `${computerChoice} - ${computerPoints}`;
   });
 })
